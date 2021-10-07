@@ -1,9 +1,9 @@
 # ArmTemplates
 The ArmTemplates repository contains the samples for practicing arm templates
 # LinkedArmTemplates
-  Summary:
+  # Summary:
      This arm template contains a script on how to create linked arm templates and embed them in a main template and deploy.
-  Rev1:     
+  # Rev1:     
      Created a linked storage account templated that creates storage account.
     How to Run:
      -> create a resource group and a storage account to store the Arm templates from portal
