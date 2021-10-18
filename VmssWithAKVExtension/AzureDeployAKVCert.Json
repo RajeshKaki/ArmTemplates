@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "TenantId": {
+        "type": "string",
+        "metadata": {
+            "description": "description"
+        }
+    },
+    "ConString": {
+        "type": "string",
+        "metadata": {
+            "description": "DB Connection String"
+        }
+    },
+    "UserObjectId": {
+        "type": "string",
+        "metadata": {
+            "description": "description"
+        }
+    }},
+    "functions": [],
+    "variables": {},
+    "resources": [{
+        "name": "kv-cert-extension-poc",
+        "type": "Microsoft.KeyVault/vaults",
+        "apiVersion": "2019-09-01",
+        "location": "[resourceGroup().location]",
+        "tags": {
+            "Poc": "VmssWithAKVExtension"
+        },
+        "properties": {
+            "enabledForDeployment": true,
+            "enabledForTemplateDeployment": true,
+            "enabledForDiskEncryption": true,
+            "tenantId": "[parameters('TenantId')]",
+            "accessPolicies": [
+                {
+                    "tenantId": "[parameters('TenantId')]",
+                    "objectId": "[parameters('UserObjectId')]",
+                    "permissions": {
+                        "keys": [ "Get","List" ],
+                        "secrets": ["List","Get","Set"],
+                        "certificates": ["List","Get","Create","Import","GetIssuers","ListIssuers"]
+                    }
+                }
+            ],
+            "sku": {
+                "name": "standard",
+                "family": "A"
+            }
+        },
+        "resources": [
+            {
+                "type": "secrets",
+                "name": "keyVaultSecret1",
+                "apiVersion": "2016-10-01",
+                "dependsOn": [
+                    "[resourceId('Microsoft.KeyVault/vaults', 'kv-cert-extension-poc')]"
+                ],
+                "properties": {
+                    "value": "[parameters('ConString')]"
+                }
+            }
+        ]
+    }],
+    "outputs": {
+        "KeyVaultName": {
+            "value": "kv-cert-extension-poc",
+            "type": "string"
+            }
+    }
+}

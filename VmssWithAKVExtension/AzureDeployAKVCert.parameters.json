@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "TenantId": {
+            "value": "3d02bcad-0100-4e81-8e0b-bea672b7e7a6"
+        },
+        "ConString": {
+            "value": "abcd" 
+        },
+        "UserObjectId": {
+            "value": "029d9f19-dab8-417c-858f-13283bf5f2db"
+        }
+    }
+}
